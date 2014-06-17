@@ -1,0 +1,3 @@
+alert_target: send_to@zombo.com
+alert_sender: send_from@zombo.com
+proxyenabled: false
