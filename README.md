@@ -10,9 +10,12 @@ Example email
 -------------
 
 > To: some.person@zombo.com
+>
 > From: alerts@zombo.com
+>
 > Subject: Alert (Tor) from CNN
 > 
+>
 > Government officials report that hackers may use the Tor network! Oh my!
 > 
 > https://cnn.com/full-article-here
