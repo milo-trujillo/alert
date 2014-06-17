@@ -20,6 +20,11 @@ Example email
 > 
 > https://cnn.com/full-article-here
 
+Usage
+-----
+
+The script is intended to be run regularly as a cronjob. It takes no arguments, but expects to find a config file in `~/.alerts/config` and reads a list of RSS feeds and a list of alert trigger terms from two more files. An example of this setup is included in the `alerts` folder. Further technical information is included as POD data at the end of the alert script.
+
 Dependencies
 ------------
 
