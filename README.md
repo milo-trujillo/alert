@@ -4,7 +4,7 @@ alert
 Overview
 --------
 
-Alerts is an RSS monitoring script. It reads a list of RSS feeds, reads a list of alert terms, and if any alert terms appear in the RSS feeds, sends an email to the specified address.
+Alert is an RSS monitoring script. It reads a list of RSS feeds, reads a list of alert terms, and if any alert terms appear in the RSS feeds, sends an email to the specified address.
 
 Example email
 -------------
