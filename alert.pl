@@ -36,20 +36,21 @@ if( lc($config{proxyenabled}) eq "true" )
 }
 
 # Here are the modules we would want to be affected by a proxy
-use XML::Feed;					# For parsing RSS feeds
-use HTML::Strip;				# For stripping html out of RSS feeds
-use Encode; 					# For UTF-8 encoding before sending email
-use Fcntl qw(:DEFAULT :flock);	# Gives us flock
-use File::Slurp;				# Gives us readfile
-use Data::Dumper;				# For debugging
+use XML::Feed;                  # For parsing RSS feeds
+use HTML::Strip;                # For stripping html out of RSS feeds
+use Text::Unidecode;            # For removing weird html artifacts
+use Encode;                     # For UTF-8 encoding before sending email
+use Fcntl qw(:DEFAULT :flock);  # Gives us flock
+use File::Slurp;                # Gives us readfile
+use Data::Dumper;               # For debugging
 
 #
 # INITIALIZING
 #
 
-my %feeds;	# Stores all RSS feeds we read from
-my @alerts;	# Every term we want to alert on
-my %sent;	# Every alert we've already sent
+my %feeds;  # Stores all RSS feeds we read from
+my @alerts; # Every term we want to alert on
+my %sent;   # Every alert we've already sent
 
 Config::Simple->import_from("$DATADIR/$config{feedfile}", \%feeds);
 
@@ -145,7 +146,7 @@ sub handle_alert
 
 	# If this RSS entry contains our alert phrase	
 	if( $headline =~ m/^$alert /i or $headline =~ m/ $alert / or 
-		$description =~ m/$alert / or $description =~ m/ $alert / )
+		$description =~ m/^$alert / or $description =~ m/ ${alert}[\. ]/ )
 	{
 		my $message = encode('utf8', $headline . "\n\n" . $description .
 			"\n\n" . $url);
@@ -172,11 +173,11 @@ sub already_alerted
 	chomp($alert_string);
 	if( $sent{$alert_string} )
 	{
-		return 1;	# True, we've encountered this alert before
+		return 1;  # True, we've encountered this alert before
 	}
 	else
 	{
-		return 0;	# False, this is a new alert
+		return 0;  # False, this is a new alert
 	}
 }
 
@@ -192,7 +193,7 @@ sub send_message
 		To		=> $config{alert_target},
 		From	=> $config{alert_sender},
 		Subject	=> $subject,
-		Message	=> $message
+		Message	=> unidecode($message)
 		);
 }
 
